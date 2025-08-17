@@ -6,6 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import shap
+from pyod.models.ocsvm import OCSVM
 from scipy.special import expit
 
 st.set_page_config(layout="wide")
@@ -187,3 +188,4 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
