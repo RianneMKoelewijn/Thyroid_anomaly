@@ -1,10 +1,12 @@
 streamlit
 numpy
+scikit-learn==1.0.2
 pandas
 plotly
 matplotlib
-shap
+shap==0.42.1
 joblib
 scipy
 openpyxl
 pyod
+
