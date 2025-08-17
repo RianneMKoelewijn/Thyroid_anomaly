@@ -7,7 +7,9 @@ import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import shap
 from pyod.models.ocsvm import OCSVM
+import shap
 from scipy.special import expit
+
 
 st.set_page_config(layout="wide")
 st.markdown("""<style>.block-container {padding-left: 1rem;padding-right: 1rem;}</style>""", unsafe_allow_html=True)
@@ -188,4 +190,5 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
