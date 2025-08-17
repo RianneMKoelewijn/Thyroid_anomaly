@@ -8,11 +8,14 @@ import matplotlib.pyplot as plt
 import shap
 from pyod.models.ocsvm import OCSVM
 import shap
+import sys
+import types
 from scipy.special import expit
-
+import shap.explainers._kernel as old_kernel
 
 st.set_page_config(layout="wide")
 st.markdown("""<style>.block-container {padding-left: 1rem;padding-right: 1rem;}</style>""", unsafe_allow_html=True)
+sys.modules['shap.explainers._kernel.Kernel'] = old_kernel.KernelExplainer
 
 ## loading in the models, data, scaler, and shap explainer
 @st.cache_resource
@@ -190,5 +193,6 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
