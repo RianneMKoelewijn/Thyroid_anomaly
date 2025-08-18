@@ -15,7 +15,7 @@ from scipy.special import expit
 
 st.set_page_config(layout="wide")
 st.markdown("""<style>.block-container {padding-left: 1rem;padding-right: 1rem;}</style>""", unsafe_allow_html=True)
- 
+st.write("SHAP version:", importlib.metadata.version("shap"))
 ## loading in the models, data, scaler, and shap explainer
 @st.cache_resource
 def load_models():
@@ -198,6 +198,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
