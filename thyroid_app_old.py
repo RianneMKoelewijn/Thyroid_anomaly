@@ -181,12 +181,14 @@ if model_key=="3d":
     with col1:
         st.text("3D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         fig3d = plot_3d(model_key)
+        st.write(fig3d)
         st.plotly_chart(fig3d)
         if submitted:
             show_shap(shap_values, model_key)
     with col2:
         st.text("2D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         fig2d = plot_2d("3d", st.session_state.points)
+        st.write(fig2d)
         st.plotly_chart(fig2d)
 else:
     with col1:
@@ -194,10 +196,12 @@ else:
         st.text("2D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         
         fig2d = plot_2d("2d", st.session_state.points)
+        st.write(fig2d)
         st.plotly_chart(fig2d)
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
