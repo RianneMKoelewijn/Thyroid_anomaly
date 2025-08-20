@@ -149,6 +149,7 @@ def plot_2d(model_key, points=None):
     fig = px.scatter(data, x='ft4', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
                      opacity=0.5, hover_data=['age','gender'], log_y=True)
+    fig.show()
     if points:
         for pt in points:
             color = "green" if pt["prediction"]==0 else "red"
@@ -220,5 +221,6 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
