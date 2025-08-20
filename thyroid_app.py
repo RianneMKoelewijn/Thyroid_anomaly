@@ -37,7 +37,7 @@ models = load_models()
 st.write("Loaded 3D data shape:", models["3d"]["data"].shape)
 st.write("Loaded 2D data shape:", models["2d"]["data"].shape)
 st.write("Loaded 3D data columns:", models["3d"]["data"].columns)
-st.write("Loaded 2D data columns:", models["2d"]["data"].columns)
+st.write("Loaded 2D data columns:", models["2d"]["data"].columns[0], "test")
 
 
 ## setting session_state
@@ -193,5 +193,6 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
