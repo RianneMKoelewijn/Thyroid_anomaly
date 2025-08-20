@@ -44,8 +44,8 @@ def load_models():
 
 models = load_models()
 
-st.write(models["3d"]["data"].dtypes)
-st.write(models["2d"]["data"].dtypes)
+# st.write(models["3d"]["data"].dtypes)
+# st.write(models["2d"]["data"].dtypes)
 
 
 
@@ -113,8 +113,6 @@ def make_prediction(model_key, inputs, gender_val, ref_val):
 def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
-    for col in ['ft3','ft4','tsh']:
-        data[col] = pd.to_numeric(data[col], errors='coerce')
         
     fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
                         color_discrete_map={0:'lightgreen',1:'tomato'},
@@ -133,9 +131,6 @@ def plot_3d(model_key):
 def plot_2d(model_key, points=None):
     model = models[model_key]
     data = model["data"]
-
-    for col in ['ft4','tsh']:
-        data[col] = pd.to_numeric(data[col], errors='coerce')
         
     fig = px.scatter(data, x='ft4', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
@@ -211,6 +206,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
