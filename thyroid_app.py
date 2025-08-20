@@ -19,13 +19,13 @@ def load_models():
         "3d": {
             "scaler": joblib.load("tsh_ft3_ft4_scaler.sav"),
             "model": joblib.load("tsh_ft3_ft4_model.sav"),
-            "data": st.dataframe(pd.read_excel('data/tsh_ft3_ft4_trainingdata.xlsx').astype(str)),
+            "data": st.dataframe(pd.read_excel('data/tsh_ft3_ft4_trainingdata.xlsx')),
             "explainer": joblib.load("3d_explainer.sav")
         },
         "2d": {
             "scaler": joblib.load("tsh_ft4_scaler.sav"),
             "model": joblib.load("tsh_ft4_2D_model.sav"),
-            "data": st.dataframe(pd.read_excel('data/tsh_ft4_trainingdata.xlsx').astype(str)),
+            "data": st.dataframe(pd.read_excel('data/tsh_ft4_trainingdata.xlsx')),
             "explainer": joblib.load("2d_explainer.sav")
         }
     }
@@ -215,6 +215,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
