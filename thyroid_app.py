@@ -134,10 +134,10 @@ def plot_2d(model_key, points=None):
     model = models[model_key]
     data = model["data"]
 
-    for col in ['ft4_filled','tsh']:
+    for col in ['ft4','tsh']:
         data[col] = pd.to_numeric(data[col], errors='coerce')
         
-    fig = px.scatter(data, x='ft4_filled', y='tsh', color='anomaly', 
+    fig = px.scatter(data, x='ft4', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
                      opacity=0.5, hover_data=['age','gender'], log_y=True)
     if points:
@@ -211,6 +211,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
