@@ -32,10 +32,10 @@ def load_models():
     for model in models.values():
         model["data"]['anomaly'] = pd.Categorical(model["data"]['anomaly'])
     for col in ["tsh", "ft3", "ft4", "age"]:
-    if col in models["3d"]["data"].columns:
-        models["3d"]["data"][col] = pd.to_numeric(models["3d"]["data"][col], errors="coerce")
-    if col in models["2d"]["data"].columns:
-        models["2d"]["data"][col] = pd.to_numeric(models["2d"]["data"][col], errors="coerce")
+        if col in models["3d"]["data"].columns:
+            models["3d"]["data"][col] = pd.to_numeric(models["3d"]["data"][col], errors="coerce")
+        if col in models["2d"]["data"].columns:
+            models["2d"]["data"][col] = pd.to_numeric(models["2d"]["data"][col], errors="coerce")
     return models
 
 models = load_models()
@@ -194,6 +194,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
