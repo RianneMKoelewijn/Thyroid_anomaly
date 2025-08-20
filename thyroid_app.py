@@ -128,7 +128,7 @@ def plot_3d(model_key):
         label = "Inlier" if pt["prediction"] == 0 else "Outlier"
             
         fig.add_trace(go.Scatter3d(x=[pt['ft3']], y=[pt['ft4']], z=[pt['tsh']],
-                                   mode='markers', name=label, showlegend=show_legend,
+                                   mode='markers', name=label,
                                    marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
 
     return fig
@@ -194,12 +194,15 @@ if model_key=="3d":
     with col1:
         st.text("3D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         fig3d = plot_3d(model_key)
+        st.write(fig3d)
+        
         st.plotly_chart(fig3d)
         if submitted:
             show_shap(shap_values, model_key)
     with col2:
         st.text("2D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         fig2d = plot_2d("3d", st.session_state.points)
+        st.write(fig2d)
         st.plotly_chart(fig2d)
 else:
     with col1:
@@ -207,10 +210,13 @@ else:
         st.text("2D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         
         fig2d = plot_2d("2d", st.session_state.points)
+        st.write(fig2d)
+    
         st.plotly_chart(fig2d)
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
