@@ -40,7 +40,6 @@ def load_models():
     return models
 
 models = load_models()
-# st.write(models["3d"]["data"].dtypes)
 
 st.write(models["3d"]["data"].head())
 st.write(models["3d"]["data"].dtypes)
@@ -168,7 +167,7 @@ if model_key=="3d":
 col1, col2 = st.columns(2)
 
 if submitted:
-    st.session_state.points = []
+    # st.session_state.points = []
     gender_bin = 1 if gender_val=="Female" else 0
     inputs = {"age": age_val, "tsh": tsh_val, "ft4": ft4_val, "ft3": ft3_val}
     ref_val = compute_ref_val(model_key, tsh_val, ft4_val, ft3_val, age_val)
@@ -182,11 +181,6 @@ if model_key=="3d":
     
     with col1:
         st.text("3D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
-        # model = models[model_key]
-        # data = model["data"]
-        fig = px.scatter(models["3d"]["data"], x='ft4', y='tsh', color='anomaly', 
-                     color_discrete_map={0:'lightgreen',1:'tomato'},
-                     opacity=0.5, hover_data=['age','gender'], log_y=True)
         st.plotly_chart(fig)
         fig3d = plot_3d(model_key)
         st.plotly_chart(fig3d)
@@ -206,6 +200,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
