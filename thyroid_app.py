@@ -38,8 +38,13 @@ def load_models():
         if col in models["2d"]["data"].columns:
             models["2d"]["data"][col] = pd.to_numeric(models["2d"]["data"][col], errors="coerce")
 
-    models["3d"]["data"] = st.dataframe(models["3d"]["data"])
-    models["2d"]["data"] = st.dataframe(models["2d"]["data"])
+    # models["3d"]["data"] = st.dataframe(models["3d"]["data"])
+    # models["2d"]["data"] = st.dataframe(models["2d"]["data"])
+
+    models["3d"]["data"] = pd.DataFrame(models["3d"]["data"])
+    models["2d"]["data"] = pd.DataFrame(models["2d"]["data"])
+    
+        # data = pd.DataFrame(model["data"])
     return models
 
 models = load_models()
@@ -206,6 +211,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
