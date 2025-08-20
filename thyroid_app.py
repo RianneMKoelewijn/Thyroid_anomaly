@@ -11,7 +11,6 @@ from scipy.special import expit
 
 st.set_page_config(layout="wide")
 st.markdown("""<style>.block-container {padding-left: 1rem;padding-right: 1rem;}</style>""", unsafe_allow_html=True)
-st.write(shap.__version__)
 
 ## loading in the models, data, scaler, and shap explainer
 @st.cache_resource
@@ -35,6 +34,9 @@ def load_models():
     return models
 
 models = load_models()
+st.write("Loaded 3D data shape:", models["3d"]["data"].shape)
+st.write("Loaded 2D data shape:", models["2d"]["data"].shape)
+
 
 ## setting session_state
 if "show_3d_graph" not in st.session_state:
@@ -189,3 +191,4 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
