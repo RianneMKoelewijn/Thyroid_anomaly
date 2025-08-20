@@ -31,6 +31,11 @@ def load_models():
     }
     for model in models.values():
         model["data"]['anomaly'] = pd.Categorical(model["data"]['anomaly'])
+    for col in ["tsh", "ft3", "ft4", "age"]:
+    if col in models["3d"]["data"].columns:
+        models["3d"]["data"][col] = pd.to_numeric(models["3d"]["data"][col], errors="coerce")
+    if col in models["2d"]["data"].columns:
+        models["2d"]["data"][col] = pd.to_numeric(models["2d"]["data"][col], errors="coerce")
     return models
 
 models = load_models()
@@ -99,7 +104,7 @@ def make_prediction(model_key, inputs, gender_val, ref_val):
 def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
-    fig = px.scatter_3d(data.head(100), x='ft3', y='ft4', z='tsh', color='anomaly', 
+    fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
                         color_discrete_map={0:'lightgreen',1:'tomato'},
                         opacity=0.5, hover_data=['age','gender'], log_z=True)
     for pt in st.session_state.points:
@@ -115,7 +120,7 @@ def plot_3d(model_key):
 def plot_2d(model_key, points=None):
     model = models[model_key]
     data = model["data"]
-    fig = px.scatter(data.head(100), x='ft4', y='tsh', color='anomaly', 
+    fig = px.scatter(data, x='ft4', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
                      opacity=0.5, hover_data=['age','gender'], log_y=True)
     if points:
@@ -189,6 +194,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
