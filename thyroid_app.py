@@ -181,7 +181,6 @@ if model_key=="3d":
     
     with col1:
         st.text("3D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
-        st.plotly_chart(fig)
         fig3d = plot_3d(model_key)
         st.plotly_chart(fig3d)
         if submitted:
@@ -200,6 +199,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
