@@ -122,6 +122,10 @@ def plot_3d(model_key):
     fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
                         color_discrete_map={0:'lightgreen',1:'tomato'},
                         opacity=0.5, hover_data=['age','gender'], log_z=True)
+    
+    return fig
+
+def plot_3d_points(fig):
     for pt in st.session_state.points:
         if "ft3" not in pt: continue
         color = "green" if pt["prediction"]==0 else "red"
@@ -140,6 +144,9 @@ def plot_2d(model_key, points=None):
     fig = px.scatter(data, x='ft4', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
                      opacity=0.5, hover_data=['age','gender'], log_y=True)
+    return fig
+    
+def plot_2d_points(fig):
     if points:
         for pt in points:
             color = "green" if pt["prediction"]==0 else "red"
@@ -216,6 +223,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
