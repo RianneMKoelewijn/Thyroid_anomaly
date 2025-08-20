@@ -182,6 +182,12 @@ if model_key=="3d":
     
     with col1:
         st.text("3D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
+        # model = models[model_key]
+        # data = model["data"]
+        fig = px.scatter(models["3d"]["data"], x='ft4', y='tsh', color='anomaly', 
+                     color_discrete_map={0:'lightgreen',1:'tomato'},
+                     opacity=0.5, hover_data=['age','gender'], log_y=True)
+        st.plotly_chart(fig)
         fig3d = plot_3d(model_key)
         st.plotly_chart(fig3d)
         if submitted:
@@ -200,6 +206,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
