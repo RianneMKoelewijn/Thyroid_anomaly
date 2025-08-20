@@ -40,13 +40,13 @@ def load_models():
 
     st.dataframe(models["3d"]["data"])
     st.dataframe(models["2d"]["data"])
-
     return models
-
 
 models = load_models()
 
 st.write(models["3d"]["data"].dtypes)
+st.write(models["2d"]["data"].dtypes)
+
 
 
 
@@ -113,10 +113,12 @@ def make_prediction(model_key, inputs, gender_val, ref_val):
 def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
+    for col in ['ft3','ft4','tsh']:
+        data[col] = pd.to_numeric(data[col], errors='coerce')
+        
     fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
                         color_discrete_map={0:'lightgreen',1:'tomato'},
                         opacity=0.5, hover_data=['age','gender'], log_z=True)
-    fig.show()
     for pt in st.session_state.points:
         if "ft3" not in pt: continue
         color = "green" if pt["prediction"]==0 else "red"
@@ -131,10 +133,13 @@ def plot_3d(model_key):
 def plot_2d(model_key, points=None):
     model = models[model_key]
     data = model["data"]
-    fig = px.scatter(data, x='ft4', y='tsh', color='anomaly', 
+
+    for col in ['ft4_filled','tsh']:
+        data[col] = pd.to_numeric(data[col], errors='coerce')
+        
+    fig = px.scatter(data, x='ft4_filled', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
                      opacity=0.5, hover_data=['age','gender'], log_y=True)
-    fig.show()
     if points:
         for pt in points:
             color = "green" if pt["prediction"]==0 else "red"
@@ -206,6 +211,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
