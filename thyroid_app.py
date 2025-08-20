@@ -46,9 +46,8 @@ def load_models():
 
 models = load_models()
 
-st.write(models["3d"]["data"].head())
 st.write(models["3d"]["data"].dtypes)
-st.write(models["3d"]["data"].isna().sum())
+
 
 
 ## setting session_state
@@ -117,30 +116,16 @@ def plot_3d(model_key):
     fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
                         color_discrete_map={0:'lightgreen',1:'tomato'},
                         opacity=0.5, hover_data=['age','gender'], log_z=True)
-    added_labels=set()
+    fig.show()
     for pt in st.session_state.points:
         if "ft3" not in pt: continue
         color = "green" if pt["prediction"]==0 else "red"
         label = "Inlier" if pt["prediction"] == 0 else "Outlier"
-
-        if label in added_labels:
-            show_legend=False
-        else: 
-            show_legend =True
-            added_labels.add(label)
             
         fig.add_trace(go.Scatter3d(x=[pt['ft3']], y=[pt['ft4']], z=[pt['tsh']],
                                    mode='markers', name=label, showlegend=show_legend,
                                    marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
 
-        fig.update_layout(
-            scene=dict(
-                xaxis_title='FT3',
-                yaxis_title='FT4',
-                zaxis_title='TSH'
-            ),
-            legend=dict(itemsizing='constant')
-        )
     return fig
 
 def plot_2d(model_key, points=None):
@@ -221,6 +206,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
