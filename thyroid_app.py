@@ -37,8 +37,10 @@ models = load_models()
 st.write("Loaded 3D data shape:", models["3d"]["data"].shape)
 st.write("Loaded 2D data shape:", models["2d"]["data"].shape)
 st.write("Loaded 3D data columns:", models["3d"]["data"].columns)
-st.write("Loaded 2D data columns:", models["2d"]["data"].columns[0], "test")
-
+st.write("Loaded 2D data columns:", models["2d"]["data"].columns)
+s = models["3d"]["data"].columns[2]
+result = any(c.isspace() for c in s)
+st.write("spaces?", s, result)
 
 ## setting session_state
 if "show_3d_graph" not in st.session_state:
@@ -193,6 +195,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
