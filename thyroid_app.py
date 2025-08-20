@@ -40,7 +40,12 @@ def load_models():
     return models
 
 models = load_models()
+# st.write(models["3d"]["data"].dtypes)
+
+st.write(models["3d"]["data"].head())
 st.write(models["3d"]["data"].dtypes)
+st.write(models["3d"]["data"].isna().sum())
+
 
 ## setting session_state
 if "show_3d_graph" not in st.session_state:
@@ -195,6 +200,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
