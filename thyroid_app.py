@@ -19,13 +19,13 @@ def load_models():
         "3d": {
             "scaler": joblib.load("tsh_ft3_ft4_scaler.sav"),
             "model": joblib.load("tsh_ft3_ft4_model.sav"),
-            "data": st.dataframe(pd.read_excel('data/tsh_ft3_ft4_trainingdata.xlsx')),
+            "data": pd.read_excel('data/tsh_ft3_ft4_trainingdata.xlsx'),
             "explainer": joblib.load("3d_explainer.sav")
         },
         "2d": {
             "scaler": joblib.load("tsh_ft4_scaler.sav"),
             "model": joblib.load("tsh_ft4_2D_model.sav"),
-            "data": st.dataframe(pd.read_excel('data/tsh_ft4_trainingdata.xlsx')),
+            "data": pd.read_excel('data/tsh_ft4_trainingdata.xlsx'),
             "explainer": joblib.load("2d_explainer.sav")
         }
     }
@@ -37,6 +37,10 @@ def load_models():
             models["3d"]["data"][col] = pd.to_numeric(models["3d"]["data"][col], errors="coerce")
         if col in models["2d"]["data"].columns:
             models["2d"]["data"][col] = pd.to_numeric(models["2d"]["data"][col], errors="coerce")
+
+    st.dataframe(models["3d"]["data"])
+    st.dataframe(models["2d"]["data"])
+
     return models
 
 
@@ -216,4 +220,5 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
