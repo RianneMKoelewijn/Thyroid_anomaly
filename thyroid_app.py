@@ -69,8 +69,8 @@ with st.sidebar.form("add_data"):
     ft3_val = ft4_val = None
     if st.session_state['show_3d_graph']:
         st.session_state.points = []
-        ft3_val = st.number_input("FT3 (pmol/l)", value=0.30, min_value=0.30, max_value=31.0, step=0.001, format="%.2f")
-    ft4_val = st.number_input("FT4 (pmol/l)", value=1.5, min_value=1.5, max_value=130.0, step=0.001, format="%.2f")
+        ft3_val = st.number_input("FT3 (pmol/L)", value=0.30, min_value=0.30, max_value=31.0, step=0.001, format="%.2f")
+    ft4_val = st.number_input("FT4 (pmol/L)", value=1.5, min_value=1.5, max_value=130.0, step=0.001, format="%.2f")
     age_val = st.number_input("Age (years)", value=0.0, min_value=0.0, max_value=120.0, step=0.001, format="%.2f")
     gender_val = st.selectbox("Gender", ("Female", "Male"))
     submitted = st.form_submit_button("Classify and show")
@@ -125,6 +125,8 @@ def plot_3d(model_key):
         fig.add_trace(go.Scatter3d(x=[pt['ft3']], y=[pt['ft4']], z=[pt['tsh']],
                                    mode='markers', name=label,
                                    marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
+
+        fig.update_layout(scene=dict(xaxis_title="FT3 (pmol/L)",  yaxis_title="FT4 (pmol/L)", zaxis_title="TSH (mU/L)"))
     return fig
 
     
@@ -143,6 +145,10 @@ def plot_2d(model_key, points=None):
             fig.add_trace(go.Scatter(x=[pt['ft4']], y=[pt['tsh']],
                                      mode='markers', name=label,
                                      marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
+    
+    fig.update_layout(scene=xaxis_title="FT4 (pmol/L)",  yaxis_title="TSH (mU/L)")
+    
+    
     return fig
     
 def plot_2d_points(fig):
@@ -218,6 +224,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
