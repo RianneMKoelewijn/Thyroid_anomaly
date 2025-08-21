@@ -125,9 +125,11 @@ def make_prediction(model_key, inputs, gender_val, ref_val):
 def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
-    fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
-                        color_discrete_map={0:'lightgreen',1:'tomato'},
-                        opacity=0.5, hover_data=['age','gender'], log_z=False)
+    # fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
+    #                     color_discrete_map={0:'lightgreen',1:'tomato'},
+    #                     opacity=0.5, hover_data=['age','gender'], log_z=False)
+    fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly')
+
     for pt in st.session_state.points:
         if "ft3" not in pt: continue
         color = "green" if pt["prediction"]==0 else "red"
@@ -229,6 +231,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
