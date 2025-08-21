@@ -124,10 +124,19 @@ def make_prediction(model_key, inputs, gender_val, ref_val):
 def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
-        
-    fig = px.scatter_3d(data.sample(100), x='ft3', y='ft4', z='tsh', color='anomaly', 
-                        color_discrete_map={0:'lightgreen',1:'tomato'},
-                        opacity=0.5, hover_data=['age','gender'], log_z=True, render_mode="svg")
+
+    hover_text = data[['ft3', 'ft4', 'tsh', 'age', 'gender']].apply(lambda row: f"FT3: {row['ft3']}, FT4: {row['ft4']}, TSH: {row['tsh']}, Age: {row['age']}, Gender: {row['gender']}", axis=1)
+
+    
+    fig.add_trace(go.Scatter3d(x=data['ft3'],y=data['ft4'],z=data['tsh'], 
+                               mode='markers',marker=dict(color=data['anomaly'].map({0: 'lightgreen', 1: 'tomato'}), opacity=0.5),
+                               text=hover_text,hoverinfo='text'))
+    
+    
+    fig.update_layout(scene=dict(xaxis_title='ft3',yaxis_title='ft4',zaxis=dict(title='tsh', type='log')))
+    # fig = px.scatter_3d(data.sample(100), x='ft3', y='ft4', z='tsh', color='anomaly', 
+    #                     color_discrete_map={0:'lightgreen',1:'tomato'},
+    #                     opacity=0.5, hover_data=['age','gender'], log_z=True, render_mode="svg")
     
     return fig
 
@@ -225,6 +234,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
