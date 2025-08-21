@@ -127,7 +127,7 @@ def plot_3d(model_key):
         
     fig = px.scatter_3d(data.sample(100), x='ft3', y='ft4', z='tsh', color='anomaly', 
                         color_discrete_map={0:'lightgreen',1:'tomato'},
-                        opacity=0.5, hover_data=['age','gender'], log_z=True)
+                        opacity=0.5, hover_data=['age','gender'], log_z=True, render_mode="svg")
     
     return fig
 
@@ -149,7 +149,7 @@ def plot_2d(model_key, points=None):
         
     fig = px.scatter(data.sample(100), x='ft4', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
-                     opacity=0.5, hover_data=['age','gender'], log_y=True)
+                     opacity=0.5, hover_data=['age','gender'], log_y=True,render_mode="svg")
     return fig
     
 def plot_2d_points(fig):
@@ -225,6 +225,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
