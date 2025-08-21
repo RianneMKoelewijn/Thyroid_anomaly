@@ -125,9 +125,11 @@ def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
 
-    hover_text = data[['ft3', 'ft4', 'tsh', 'age', 'gender']].apply(lambda row: f"FT3: {row['ft3']}, FT4: {row['ft4']}, TSH: {row['tsh']}, Age: {row['age']}, Gender: {row['gender']}", axis=1)
+
 
     
+    fig = go.Figure()
+    hover_text = data[['ft3', 'ft4', 'tsh', 'age', 'gender']].apply(lambda row: f"FT3: {row['ft3']}, FT4: {row['ft4']}, TSH: {row['tsh']}, Age: {row['age']}, Gender: {row['gender']}", axis=1)
     fig.add_trace(go.Scatter3d(x=data['ft3'],y=data['ft4'],z=data['tsh'], 
                                mode='markers',marker=dict(color=data['anomaly'].map({0: 'lightgreen', 1: 'tomato'}), opacity=0.5),
                                text=hover_text,hoverinfo='text'))
@@ -234,6 +236,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
