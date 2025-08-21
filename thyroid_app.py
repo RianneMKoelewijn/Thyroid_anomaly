@@ -51,6 +51,10 @@ models = load_models()
 
 # st.write(models["3d"]["data"].dtypes)
 # st.write(models["2d"]["data"].dtypes)
+st.write("Shape of data", data.shape)
+st.write("NaN counts", data.isna().sum())
+st.write("Unique anomaly values", data["anomaly"].unique() if "anomaly" in data else "missing")
+st.write(data.head())
 
 
 
@@ -201,7 +205,6 @@ if model_key=="3d":
     with col1:
         st.text("3D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         fig3d = plot_3d(model_key)
-        st.write(fig3d)
         
         st.plotly_chart(fig3d)
         if submitted:
@@ -209,20 +212,18 @@ if model_key=="3d":
     with col2:
         st.text("2D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         fig2d = plot_2d("3d", st.session_state.points)
-        st.write(fig2d)
         st.plotly_chart(fig2d)
 else:
     with col1:
         st.subheader(f"{'Model 1 (TSH, FT4)'}")
         st.text("2D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
         
-        fig2d = plot_2d("2d", st.session_state.points)
-        st.write(fig2d)
-    
+        fig2d = plot_2d("2d", st.session_state.points)    
         st.plotly_chart(fig2d)
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
