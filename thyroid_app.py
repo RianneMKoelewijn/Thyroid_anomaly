@@ -146,7 +146,7 @@ def plot_2d(model_key, points=None):
                                      mode='markers', name=label,
                                      marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
     
-    fig.update_layout(scene=xaxis_title="FT4 (pmol/L)",  yaxis_title="TSH (mU/L)")
+    fig.update_layout(xaxis_title="FT4 (pmol/L)",  yaxis_title="TSH (mU/L)")
     
     
     return fig
@@ -224,6 +224,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
