@@ -136,15 +136,15 @@ def plot_3d(model_key):
     
     
     fig.update_layout(scene=dict(xaxis_title='ft3',yaxis_title='ft4',zaxis=dict(title='tsh', type='log')))
-    if points:
-        for pt in st.session_state.points:
-            if "ft3" not in pt: continue
-            color = "green" if pt["prediction"]==0 else "red"
-            label = "Inlier" if pt["prediction"] == 0 else "Outlier"
-                
-            fig.add_trace(go.Scatter3d(x=[pt['ft3']], y=[pt['ft4']], z=[pt['tsh']],
-                                       mode='markers', name=label,
-                                       marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
+    
+    for pt in st.session_state.points:
+        if "ft3" not in pt: continue
+        color = "green" if pt["prediction"]==0 else "red"
+        label = "Inlier" if pt["prediction"] == 0 else "Outlier"
+            
+        fig.add_trace(go.Scatter3d(x=[pt['ft3']], y=[pt['ft4']], z=[pt['tsh']],
+                                   mode='markers', name=label,
+                                   marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
         
     # fig = px.scatter_3d(data.sample(100), x='ft3', y='ft4', z='tsh', color='anomaly', 
     #                     color_discrete_map={0:'lightgreen',1:'tomato'},
@@ -254,6 +254,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
