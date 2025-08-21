@@ -49,21 +49,6 @@ def load_models():
 
 models = load_models()
 
-# st.write(models["3d"]["data"].dtypes)
-# st.write(models["2d"]["data"].dtypes)
-data = models['3d']['data']
-
-st.write(data['anomaly'].unique())
-
-st.write("Columns:", data.columns.tolist())
-st.write("Head:", data.head())
-st.write("Dtypes:", data.dtypes)
-st.write("Describe:", data.describe())
-st.write("NaNs:", data.isna().sum())
-
-
-
-
 ## setting session_state
 if "show_3d_graph" not in st.session_state:
     st.session_state["show_3d_graph"] = True
@@ -128,11 +113,10 @@ def make_prediction(model_key, inputs, gender_val, ref_val):
 def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
-    # fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
-    #                     color_discrete_map={0:'lightgreen',1:'tomato'},
-    #                     opacity=0.5, hover_data=['age','gender'], log_z=False)
-    fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly')
-
+    fig = px.scatter_3d(data, x='ft3', y='ft4', z='tsh', color='anomaly', 
+                        color_discrete_map={0:'lightgreen',1:'tomato'},
+                        opacity=0.5, hover_data=['age','gender'], log_z=True)
+    
     for pt in st.session_state.points:
         if "ft3" not in pt: continue
         color = "green" if pt["prediction"]==0 else "red"
@@ -150,7 +134,7 @@ def plot_2d(model_key, points=None):
         
     fig = px.scatter(data, x='ft4', y='tsh', color='anomaly', 
                      color_discrete_map={0:'lightgreen',1:'tomato'},
-                     opacity=0.5, hover_data=['age','gender'], log_y=False)
+                     opacity=0.5, hover_data=['age','gender'], log_y=True)
 
     if points:
         for pt in points:
@@ -234,6 +218,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
