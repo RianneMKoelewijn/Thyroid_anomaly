@@ -125,17 +125,21 @@ def plot_3d(model_key):
     model = models[model_key]
     data = model["data"]
 
+    
+    # fig = go.Figure()
+    # hover_text = data[['ft3', 'ft4', 'tsh', 'age', 'gender']].apply(lambda row: f"FT3: {row['ft3']}, FT4: {row['ft4']}, TSH: {row['tsh']}, Age: {row['age']}, Gender: {row['gender']}", axis=1)
+    # fig.add_trace(go.Scatter3d(x=data['ft3'],y=data['ft4'],z=data['tsh'], 
+    #                            mode='markers',marker=dict(color=data['anomaly'].map({0: 'lightgreen', 1: 'tomato'}), opacity=0.5),
+    #                            text=hover_text,hoverinfo='text'))
+    
+    
+    # fig.update_layout(scene=dict(xaxis_title='ft3',yaxis_title='ft4',zaxis=dict(title='tsh', type='log')))
 
 
-    
-    fig = go.Figure()
-    hover_text = data[['ft3', 'ft4', 'tsh', 'age', 'gender']].apply(lambda row: f"FT3: {row['ft3']}, FT4: {row['ft4']}, TSH: {row['tsh']}, Age: {row['age']}, Gender: {row['gender']}", axis=1)
-    fig.add_trace(go.Scatter3d(x=data['ft3'],y=data['ft4'],z=data['tsh'], 
-                               mode='markers',marker=dict(color=data['anomaly'].map({0: 'lightgreen', 1: 'tomato'}), opacity=0.5),
-                               text=hover_text,hoverinfo='text'))
-    
-    
-    fig.update_layout(scene=dict(xaxis_title='ft3',yaxis_title='ft4',zaxis=dict(title='tsh', type='log')))
+
+    fig = px.scatter_3d(data.sample(100), x='ft3', y='ft4', z='tsh', color='anomaly', 
+                        color_discrete_map={0:'lightgreen',1:'tomato'},
+                        opacity=0.5, hover_data=['age','gender'], log_z=True, render_mode="svg")
     
     for pt in st.session_state.points:
         if "ft3" not in pt: continue
@@ -146,24 +150,9 @@ def plot_3d(model_key):
                                    mode='markers', name=label,
                                    marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
         
-    # fig = px.scatter_3d(data.sample(100), x='ft3', y='ft4', z='tsh', color='anomaly', 
-    #                     color_discrete_map={0:'lightgreen',1:'tomato'},
-    #                     opacity=0.5, hover_data=['age','gender'], log_z=True, render_mode="svg")
     
     return fig
-
-def plot_3d_points(fig):
-    for pt in st.session_state.points:
-        if "ft3" not in pt: continue
-        color = "green" if pt["prediction"]==0 else "red"
-        label = "Inlier" if pt["prediction"] == 0 else "Outlier"
-            
-        fig.add_trace(go.Scatter3d(x=[pt['ft3']], y=[pt['ft4']], z=[pt['tsh']],
-                                   mode='markers', name=label,
-                                   marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
-
-    return fig
-
+    
 def plot_2d(model_key, points=None):
     model = models[model_key]
     data = model["data"]
@@ -254,6 +243,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
