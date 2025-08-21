@@ -53,10 +53,11 @@ models = load_models()
 # st.write(models["2d"]["data"].dtypes)
 data = models['3d']['data']
 
-st.write("Shape of data", data.shape)
-st.write("NaN counts", data.isna().sum())
-st.write("Unique anomaly values", data["anomaly"].unique() if "anomaly" in data else "missing")
-st.write(data.head())
+st.write("Columns:", data.columns.tolist())
+st.write("Head:", data.head())
+st.write("Dtypes:", data.dtypes)
+st.write("Describe:", data.describe())
+st.write("NaNs:", data.isna().sum())
 
 
 
@@ -231,6 +232,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
