@@ -51,7 +51,7 @@ models = load_models()
 
 # st.write(models["3d"]["data"].dtypes)
 # st.write(models["2d"]["data"].dtypes)
-data = models['3d']['data]
+data = models['3d']['data']
 
 st.write("Shape of data", data.shape)
 st.write("NaN counts", data.isna().sum())
@@ -225,6 +225,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
