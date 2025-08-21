@@ -53,6 +53,8 @@ models = load_models()
 # st.write(models["2d"]["data"].dtypes)
 data = models['3d']['data']
 
+st.write(data['anomaly'].unique())
+
 st.write("Columns:", data.columns.tolist())
 st.write("Head:", data.head())
 st.write("Dtypes:", data.dtypes)
@@ -232,6 +234,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
