@@ -126,7 +126,7 @@ def plot_3d(model_key):
                                    mode='markers', name=label,
                                    marker=dict(size=10, color=color, symbol='diamond', line=dict(width=2, color='black'))))
 
-        fig.update_layout(scene=dict(xaxis_title="FT3 (pmol/L)",  yaxis_title="FT4 (pmol/L)", zaxis_title="TSH (mU/L)"))
+    fig.update_layout(scene=dict(xaxis_title="FT3 (pmol/L)",  yaxis_title="FT4 (pmol/L)", zaxis_title="TSH (mU/L)"))
     return fig
 
     
@@ -224,6 +224,7 @@ else:
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
