@@ -38,9 +38,6 @@ def load_models():
         if col in models["2d"]["data"].columns:
             models["2d"]["data"][col] = pd.to_numeric(models["2d"]["data"][col], errors="coerce")
 
-    # models["3d"]["data"] = st.dataframe(models["3d"]["data"])
-    # models["2d"]["data"] = st.dataframe(models["2d"]["data"])
-
     models["3d"]["data"] = pd.DataFrame(models["3d"]["data"])
     models["2d"]["data"] = pd.DataFrame(models["2d"]["data"])
     
@@ -164,7 +161,6 @@ def plot_2d_points(fig):
 
 def show_shap(shap_values, model_key):
     st.subheader("SHAP explanation of your datapoint")
-    
     st.write("Shows us how each feature contributes to the model's decision.\nThe threshold for considering whether a new datapoint is an outlier is:", round(models[model_key]["model"].threshold_,2))
     st.write("Everything below the threshold is considered an inlier and everything above an outlier and thus an anomaly.")
     fig, ax = plt.subplots()
@@ -216,14 +212,15 @@ if model_key=="3d":
         st.plotly_chart(fig2d)
 else:
     with col1:
-        st.subheader(f"{'Model 1 (TSH, FT4)'}")
-        st.text("2D plot of model 1\nTotal of 3182 datapoints with 160 anomalies")
+        st.subheader(f"{'Model 2 (TSH, FT4)'}")
+        st.text("2D plot of model 2\nTotal of 58.182 datapoints with 1746 anomalies")
         
         fig2d = plot_2d("2d", st.session_state.points)    
         st.plotly_chart(fig2d)
     with col2:
         if submitted:
             show_shap(shap_values, model_key)    
+
 
 
 
